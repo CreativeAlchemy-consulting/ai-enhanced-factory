@@ -1,0 +1,87 @@
+{
+  "name": "ai-enhanced-development-deployment-factory",
+  "version": "1.0.0",
+  "description": "AI-Enhanced Development & Deployment Factory - Comprehensive infrastructure framework with Claude MCP integration, Infrastructure as Code, and real-time monitoring",
+  "main": "index.js",
+  "scripts": {
+    "start": "node claude-framework/index.js",
+    "dashboard": "node claude-framework/dashboard-server.js",
+    "test": "node verification/ndb-verification-framework.py",
+    "deploy": "cd infrastructure && ansible-playbook playbooks/deploy-notion-infrastructure.yml",
+    "verify": "python verification/ndb-verification-framework.py",
+    "logs": "tail -f claude-framework/logs/application.log",
+    "clean": "rm -rf claude-framework/logs/* infrastructure/deployment_reports/* infrastructure/test_reports/*",
+    "setup": "npm install && cp .env.example .env",
+    "health-check": "curl http://localhost:3000/api/stats",
+    "backup": "cd infrastructure && ansible-playbook playbooks/backup-infrastructure.yml",
+    "docs": "cd docs && python -m http.server 8000"
+  },
+  "keywords": [
+    "ai-enhanced",
+    "deployment-factory", 
+    "claude-mcp",
+    "infrastructure-as-code",
+    "ansible",
+    "notion-api",
+    "real-time-monitoring",
+    "confidence-gate",
+    "structured-logging",
+    "verification-framework",
+    "development-automation",
+    "creative-alchemy"
+  ],
+  "author": {
+    "name": "Creative Alchemy Consulting",
+    "email": "contact@creativealchemy.consulting",
+    "url": "https://github.com/CreativeAlchemy-consulting"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CreativeAlchemy-consulting/ai-enhanced-factory.git"
+  },
+  "bugs": {
+    "url": "https://github.com/CreativeAlchemy-consulting/ai-enhanced-factory/issues"
+  },
+  "homepage": "https://github.com/CreativeAlchemy-consulting/ai-enhanced-factory#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "@notionhq/notion-mcp-server": "latest",
+    "@modelcontextprotocol/server-filesystem": "latest"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1",
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux", 
+    "win32"
+  ],
+  "cpu": [
+    "x64",
+    "arm64"
+  ],
+  "directories": {
+    "doc": "docs",
+    "example": "examples",
+    "lib": "claude-framework",
+    "test": "verification"
+  },
+  "files": [
+    "claude-framework/",
+    "mcp-config/",
+    "infrastructure/",
+    "verification/",
+    "docs/",
+    "examples/",
+    "README.md",
+    "LICENSE",
+    ".env.example"
+  ]
+}
