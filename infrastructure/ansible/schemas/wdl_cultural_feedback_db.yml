@@ -1,0 +1,14 @@
+database_name: "Client Cultural Feedback"
+properties:
+  "Feedback ID": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: prop("Assignment").prop("Assignment ID") + "-FB"
+  "Response Method": { type: "select", select: { options: } }
+  "Cultural Comfort Level": { type: "number", number: { format: "number" } }
+  "Communication Appropriateness": { type: "number", number: { format: "number" } }
+  "Visual Accessibility Success": { type: "number", number: { format: "number" } }
+  "Overall Cultural Satisfaction": { type: "number", number: { format: "number" } }
+  "Would Request Again": { type: "checkbox" }
+  "Cultural Strengths / Improvement Areas": { type: "rich_text" }
+  "Assignment": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Assignments" } }
+  "Client": { type: "rollup", rollup: { relation_property_name: "Assignment", rollup_property_name: "Client", function: "show_original" } }
+  "Interpreter": { type: "rollup", rollup: { relation_property_name: "Assignment", rollup_property_name: "Interpreter", function: "show_original" } }

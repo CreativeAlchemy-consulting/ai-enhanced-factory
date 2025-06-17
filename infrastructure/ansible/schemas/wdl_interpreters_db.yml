@@ -1,0 +1,24 @@
+database_name: "Interpreters"
+properties:
+  "Interpreter Name": { type: "title" }
+  "Interpreter ID": { type: "number", number: { format: "number" } }
+  "Contact Email": { type: "email" }
+  "Phone Number": { type: "phone_number" }
+  "Languages": { type: "multi_select", multi_select: { options: } }
+  "Specializations": { type: "multi_select", multi_select: { options: } }
+  "Certifications": { type: "multi_select", multi_select: { options: } }
+  "Base Rate": { type: "number", number: { format: "number_with_commas" } }
+  "Location": { type: "rich_text" }
+  "Interpreter Type": { type: "select", select: { options: } }
+  "Deaf Community Experience": { type: "select", select: { options: } }
+  "Cultural Competency Level": { type: "select", select: { options: } } # Options: 1-5 scale
+  "ASL Regional Dialects": { type: "multi_select", multi_select: { options: } }
+  "Cultural Training Completed": { type: "multi_select", multi_select: { options: } }
+  "Related Assignments": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Assignments" } }
+  "Client Cultural Feedback": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Client Cultural Feedback" } }
+  "Assignment Acceptance Rate": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: if(prop("Total Assignments Offered") > 0, round(prop("Confirmed Assignments") / prop("Total Assignments Offered") * 100), 0)
+  "Cultural Performance Score": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: if(prop("Total Cultural Feedback") > 0, round((prop("Overall Client Cultural Rating") + prop("Cultural Comfort Score") + prop("Communication Appropriateness Score")) / 3), 0)
+  "Client Retention Rate": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: if(prop("Cultural Feedback Count") > 0, round(prop("Would Request Again Count") / prop("Cultural Feedback Count") * 100), 0)

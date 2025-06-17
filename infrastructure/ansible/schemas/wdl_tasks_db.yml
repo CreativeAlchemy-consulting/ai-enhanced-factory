@@ -1,0 +1,11 @@
+database_name: "Tasks (Cultural Development)"
+properties:
+  "Task Name": { type: "title" }
+  "Task Type": { type: "select", select: { options: } }
+  "Status": { type: "select", select: { options: } }
+  "Due Date": { type: "date" }
+  "Cultural Focus Area": { type: "select", select: { options: } }
+  "Cultural Outcome Goal": { type: "rich_text" }
+  "Assigned To": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Interpreters" } } # Assuming this links to Interpreters
+  "Related Client": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Clients" } }
+  "Cultural Mentor": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Interpreters" } } # Assuming mentor is also an interpreter

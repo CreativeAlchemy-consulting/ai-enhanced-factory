@@ -1,0 +1,14 @@
+database_name: "Jobs"
+properties:
+  "Event Title": { type: "title" }
+  "Event Date": { type: "date" }
+  "Event Time Start / End": { type: "rich_text" } # Notion doesn't have a native time range property, rich_text is a common workaround
+  "Location": { type: "rich_text" }
+  "Job Status": { type: "select", select: { options: } }
+  "Cultural Context Requirements": { type: "multi_select", multi_select: { options: } }
+  "ASL Dialect Preference": { type: "select", select: { options: } }
+  "Required Interpreter Type": { type: "select", select: { options: } }
+  "Client": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Clients" } }
+  "Related Assignments": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Assignments" } }
+  "Job ID": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: "WD-" + format(prop("Event Date"), "YYYYMMDD") + "-" + prop("Client").prop("Billing Client ID")

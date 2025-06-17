@@ -1,0 +1,18 @@
+database_name: "Finance"
+properties:
+  "Invoice Number": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: "INV-" + format(prop("Invoice Date"), "YYYY") + "-" + prop("Client").prop("Billing Client ID") + "-" + prop("ID")
+  "Invoice Date": { type: "date" }
+  "Payment Status": { type: "select", select: { options: } }
+  "Funding Source": { type: "select", select: { options: } }
+  "Client": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Clients" } }
+  "Related Assignments": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Assignments" } }
+  "Subtotal": { type: "rollup", rollup: { relation_property_name: "Related Assignments", rollup_property_name: "Total Amount", function: "sum" } }
+  "Due Date": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: dateAdd(prop("Invoice Date"), prop("Payment Terms"), "days")
+  "Total Amount": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: prop("Subtotal") + (prop("Subtotal") * prop("Tax Rate"))
+  "Balance Due": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: prop("Total Amount") - prop("Amount Paid")
+  "Deaf Service Revenue": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # This formula requires logic to check if the client is Deaf-owned. Example: if(prop("Client").prop("Deaf-Owned Business"), prop("Total Amount"), 0)

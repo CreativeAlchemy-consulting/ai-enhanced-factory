@@ -1,0 +1,35 @@
+database_name: "Clients"
+properties:
+  "Company Name": { type: "title" }
+  "Primary Contact": { type: "rich_text" }
+  "Billing Client ID": { type: "number", number: { format: "number" } }
+  "Client Email": { type: "email" }
+  "Phone Number": { type: "phone_number" }
+  "Billing Address": { type: "rich_text" }
+  "Client Since": { type: "date" }
+  "Industry": { type: "multi_select", multi_select: { options: } } # Options to be added in Notion
+  "Website": { type: "url" }
+  "Deaf-Owned Business": { type: "checkbox" }
+  "Preferred Communication": { type: "select", select: { options: } }
+  "ASL Dialect Preference": { type: "select", select: { options: } }
+  "Visual Materials Needed": { type: "checkbox" }
+  "Cultural Accommodation Needs": { type: "multi_select", multi_select: { options: } }
+  "Deaf Community Connection Level": { type: "select", select: { options: } } # Options: 1-5 scale
+  "Communication Accessibility": { type: "multi_select", multi_select: { options: } }
+  "Related Jobs": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Jobs" } }
+  "Preferred Interpreters": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Interpreters" } }
+  "Cultural Feedback History": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Client Cultural Feedback" } }
+  "Related Invoices": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Finance" } } # Added for Lifetime Value rollup
+  "Related Assignments": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Assignments" } } # Added for Satisfaction/Service Date rollups
+  "Lifetime Value": { type: "rollup", rollup: { relation_property_name: "Related Invoices", rollup_property_name: "Total Amount", function: "sum" } }
+  "Last Service Date": { type: "rollup", rollup: { relation_property_name: "Related Assignments", rollup_property_name: "Assignment Date", function: "latest_date" } } # Assuming "Assignment Date" exists on Assignments
+  "Average Satisfaction": { type: "rollup", rollup: { relation_property_name: "Related Assignments", rollup_property_name: "Client Feedback Score", function: "average" } }
+  "Cultural Match Quality": { type: "rollup", rollup: { relation_property_name: "Cultural Feedback History", rollup_property_name: "Overall Cultural Satisfaction", function: "average" } }
+  "Engagement Score": { type: "formula", formula: { expression: "" } } # Formula to be added manually in Notion
+  # Formula: if(empty(prop("Last Service Date")), 0, if(dateBetween(now(), prop("Last Service Date"), "days") < 30, 35, if(dateBetween(now(), prop("Last Service Date"), "days") < 60, 25, if(dateBetween(now(), prop("Last Service Date"), "days") < 90, 15, 5))))
+  "Client Health Score": { type: "formula", formula: { expression: "" } } # Formula to be added manually in Notion
+  # Formula: round(prop("Engagement Score") + (if(prop("Lifetime Value") > 25000, 25, if(prop("Lifetime Value") > 10000, 20, if(prop("Lifetime Value") > 5000, 15, if(prop("Lifetime Value") > 1000, 10, 5))))) + ((prop("Total Jobs") / max(dateBetween(now(), prop("Client Since"), "months"), 1)) * 3) + (prop("Average Satisfaction") * 3) + (if(dateBetween(now(), prop("Client Since"), "months") > 24, 10, if(dateBetween(now(), prop("Client Since"), "months") > 12, 8, 5))))
+  "Deaf Experience Score": { type: "formula", formula: { expression: "" } } # Formula to be added manually in Notion
+  # Formula: if(prop("Deaf-Owned Business") == false, 0, round((prop("Cultural Match Quality") * 6) + (prop("Visual Accessibility Effectiveness") * 5) + (prop("Deaf Community Connection Level") * 4) + (prop("Cultural Accommodation Success") * 5)))
+  "Client Segment": { type: "formula", formula: { expression: "" } } # Formula to be added manually in Notion
+  # Formula: if(prop("Deaf-Owned Business") == true, if((prop("Client Health Score") + prop("Deaf Experience Score")) >= 170, "Deaf Strategic Partner", if((prop("Client Health Score") + prop("Deaf Experience Score")) >= 140, "Deaf Growth Client", "Deaf Core Client")), if(prop("Client Health Score") >= 85, "Strategic Partner", if(prop("Client Health Score") >= 70, "Growth Client", "Core Client")))

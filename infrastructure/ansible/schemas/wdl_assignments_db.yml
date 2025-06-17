@@ -1,0 +1,18 @@
+database_name: "Assignments"
+properties:
+  "Assignment ID": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: prop("Job").prop("Job ID") + "-" + prop("Interpreter").prop("Interpreter ID")
+  "Status": { type: "select", select: { options: } }
+  "Invoice Status": { type: "select", select: { options: } }
+  "Cultural Success Rating": { type: "number", number: { format: "number" } }
+  "ASL Dialect Match Quality": { type: "number", number: { format: "number" } }
+  "Client Feedback Score": { type: "number", number: { format: "number" } }
+  "Job": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Jobs" } }
+  "Client": { type: "rollup", rollup: { relation_property_name: "Job", rollup_property_name: "Client", function: "show_original" } }
+  "Interpreter": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Interpreters" } }
+  "Related Invoice": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Finance" } }
+  "Cultural Feedback Received": { type: "relation", relation: { database_id: "LOOKUP_ID_FOR_Client Cultural Feedback" } }
+  "Billable Hours": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: prop("Actual Duration") + prop("Travel Time") + prop("Prep Time")
+  "Total Amount": { type: "formula", formula: { expression: "" } } # Formula to be added manually
+  # Formula: (prop("Actual Duration") + prop("Travel Time") + prop("Prep Time")) * (prop("Interpreter").prop("Base Rate") * prop("Rate Multiplier")) + prop("Additional Charges")
